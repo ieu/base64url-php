@@ -1,0 +1,19 @@
+{
+    "name": "ieu/base64url",
+    "description": "Base64Url encoder and decoder",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">5.6.0"
+    },
+    "require-dev": {
+        "phpbench/phpbench": "^0.13.0",
+        "phpunit/phpunit": "^5.7.27"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ieu\\Base64Url\\": "src/"
+        }
+    }
+}
