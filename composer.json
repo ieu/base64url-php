@@ -9,7 +9,8 @@
     },
     "require-dev": {
         "phpbench/phpbench": "^0.13.0",
-        "phpunit/phpunit": "^5.7.27"
+        "phpunit/phpunit": "^5.7.27",
+        "ext-openssl": "*"
     },
     "autoload": {
         "psr-4": {
