@@ -2,8 +2,6 @@
 
 This is [Base64Url](https://tools.ietf.org/html/rfc4648#section-5) encoder and decoder written in pure PHP.
 
-The algorithm used is inspired by [paragonie/constant_time_encoding](https://github.com/paragonie/constant_time_encoding/blob/master/src/Base64.php) that originally written for Base64.
-
 ## Installation
 First add this repo to `composer.json`:
 ```json
