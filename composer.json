@@ -5,11 +5,11 @@
     "license": "MIT",
     "minimum-stability": "stable",
     "require": {
-        "php": ">=5.6.0"
+        "php": ">=7.0.0"
     },
     "require-dev": {
-        "phpbench/phpbench": "^0.13.0",
-        "phpunit/phpunit": "^5.7.27",
+        "phpbench/phpbench": "^0.14.0",
+        "phpunit/phpunit": "^6.5.14",
         "ext-openssl": "*"
     },
     "autoload": {
