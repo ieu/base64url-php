@@ -15,7 +15,7 @@ class SimpleDecodingBench
 
     public function init()
     {
-        $this->encodedString = strtr(base64_encode(openssl_random_pseudo_bytes(mt_rand(0x10, 0x400))), '+/', '-_');
+        $this->encodedString = base64url_encode(openssl_random_pseudo_bytes(mt_rand(0x0, 0x400)));
     }
 
     /**
@@ -33,7 +33,6 @@ class SimpleDecodingBench
      */
     public function benchSimpleWrapper()
     {
-        // https://github.com/firebase/php-jwt/blob/master/src/JWT.php
-        base64_decode(strtr($this->encodedString, '-_', '+/'));
+        base64url_decode($this->encodedString);
     }
 }

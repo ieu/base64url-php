@@ -15,7 +15,7 @@ class SimpleEncodingBench
 
     public function init()
     {
-        $this->rawString = openssl_random_pseudo_bytes(mt_rand(0x10, 0x400));
+        $this->rawString = openssl_random_pseudo_bytes(mt_rand(0x0, 0x400));
     }
 
     /**
@@ -33,7 +33,6 @@ class SimpleEncodingBench
      */
     public function benchSimpleWrapper()
     {
-        // https://github.com/firebase/php-jwt/blob/master/src/JWT.php
-        strtr(base64_encode($this->rawString), '+/', '-_');
+        base64_encode($this->rawString);
     }
 }
