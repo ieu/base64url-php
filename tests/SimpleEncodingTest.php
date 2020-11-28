@@ -11,7 +11,7 @@ class SimpleEncodingTest extends TestCase
         for($i = 0; $i <= 1000; ++$i) {
             $input = random_bytes(mt_rand(1, 1024));
             $output = Base64Url::encode($input);
-            $expectedOutput = strtr(base64_encode($input), '+/', '-_'); // https://github.com/firebase/php-jwt/blob/master/src/JWT.php
+            $expectedOutput = base64url_encode($input);
             $this->assertEquals($expectedOutput, $output);
         }
     }

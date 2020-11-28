@@ -10,7 +10,7 @@ class SimpleDecodingTest extends TestCase
     {
         for($i = 0; $i <= 1000; ++$i) {
             $expectedOutput = random_bytes(mt_rand(1, 1024));
-            $input = strtr(base64_encode($expectedOutput), '+/', '-_'); // https://github.com/firebase/php-jwt/blob/master/src/JWT.php
+            $input = base64url_encode($expectedOutput);
             $output = Base64Url::decode($input);
             $this->assertEquals($expectedOutput, $output);
         }
