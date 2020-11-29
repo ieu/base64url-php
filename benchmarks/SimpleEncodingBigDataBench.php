@@ -33,6 +33,6 @@ class SimpleEncodingBench
      */
     public function benchSimpleWrapper()
     {
-        base64_encode($this->rawString);
+        base64url_encode($this->rawString);
     }
 }
