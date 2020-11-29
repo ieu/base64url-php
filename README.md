@@ -24,16 +24,17 @@ composer require ieu/base64url:dev-master
 ```php
 require __DIR__ . '/vendor/autoload.php';
 
-use Ieu\Base64Url\Base64Url;
+use function Ieu\Base64Url\base64url_encode;
+use function Ieu\Base64Url\base64url_decode;
 
 // Encoding
-Base64Url::encode("Hello, world!");
+base64url_encode("Hello, world!");
 
 // Encoding without padding
-Base64Url::encode("Hello, world!", false);
+base64url_encode("Hello, world!", false);
 
 // Decode
-Base64Url::decode("SGVsbG8sIHdvcmxkIQ==");
+base64url_decode("SGVsbG8sIHdvcmxkIQ==");
 ```
 
 ## Tests

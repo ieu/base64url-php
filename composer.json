@@ -13,8 +13,8 @@
         "ext-openssl": "*"
     },
     "autoload": {
-        "psr-4": {
-            "Ieu\\Base64Url\\": "src/"
-        }
+        "files": [
+            "src/base64url.php"
+        ]
     }
 }

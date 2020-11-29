@@ -1,7 +1,7 @@
 <?php
 
 
-use Ieu\Base64Url\Base64Url;
+use function Ieu\Base64Url\base64url_encode as my_base64url_encode;
 use PhpBench\Benchmark\Metadata\Annotations\BeforeMethods;
 use PhpBench\Benchmark\Metadata\Annotations\Iterations;
 use PhpBench\Benchmark\Metadata\Annotations\Revs;
@@ -24,7 +24,7 @@ class Random5KBDataEncodeBench
      */
     public function benchBase64Url()
     {
-        Base64Url::encode($this->data);
+        my_base64url_encode($this->data);
     }
 
     /**
