@@ -46,10 +46,10 @@ Base64Url::decode("SGVsbG8sIHdvcmxkIQ==");
 
 Encoding benchmarks:
 ```shell script
-./vendor/bin/phpbench run benchmarks/SimpleEncodingBench.php --report=aggregate
+./vendor/bin/phpbench run benchmarks/encode --report=my_report
 ```
 
 Decoding benchmarks:
 ```shell script
-./vendor/bin/phpbench run benchmarks/SimpleDecodingBench.php --report=aggregate
+./vendor/bin/phpbench run benchmarks/decode --report=my_report
 ```

@@ -9,30 +9,39 @@ use PhpBench\Benchmark\Metadata\Annotations\Revs;
 /**
  * @BeforeMethods("init")
  */
-class SimpleEncodingBench
+class Random512KBDataDecodeBench
 {
-    private $rawString;
+    private $data;
 
     public function init()
     {
-        $this->rawString = random_bytes(0x2800);
+        $this->data = base64url_encode(random_bytes(0x80000));
     }
 
     /**
-     * @Revs(1000)
+     * @Revs(100)
      * @Iterations(10)
      */
     public function benchBase64Url()
     {
-        Base64Url::encode($this->rawString);
+        Base64Url::decode($this->data);
     }
 
     /**
-     * @Revs(1000)
+     * @Revs(100)
      * @Iterations(10)
      */
-    public function benchSimpleWrapper()
+    public function benchBase64UrlStrtr()
     {
-        base64url_encode($this->rawString);
+        base64url_decode($this->data);
+    }
+
+    /**
+     * @Revs(100)
+     * @Iterations(10)
+     */
+    public function benchBase64()
+    {
+        base64_decode($this->data);
     }
 }

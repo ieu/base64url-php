@@ -1,4 +1,10 @@
 {
   "bootstrap": "benchmarks/bootstrap.php",
-  "path": "benchmarks"
+  "path": "benchmarks",
+  "reports": {
+  	"my_report": {
+  		"extends": "aggregate",
+  		"break": [ "benchmark" ]
+  	}
+  }
 }
