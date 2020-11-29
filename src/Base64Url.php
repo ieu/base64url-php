@@ -161,28 +161,27 @@ class Base64Url
     {
         $encoded = '';
 
-        $dataLength = strlen($data);
-        for ($offset = 0; $offset + 3 <= $dataLength; $offset += 3) {
-            $b1 = self::ASCII_REVERSE_TABLE[$data[$offset]];
-            $b2 = self::ASCII_REVERSE_TABLE[$data[$offset + 1]];
-            $b3 = self::ASCII_REVERSE_TABLE[$data[$offset + 2]];
+        for ($offset = 0, $remaining = strlen($data); $remaining > 2; $remaining -= 3) {
+            $b1 = self::ASCII_REVERSE_TABLE[$data[$offset++]];
+            $b2 = self::ASCII_REVERSE_TABLE[$data[$offset++]];
+            $b3 = self::ASCII_REVERSE_TABLE[$data[$offset++]];
             $encoded .= self::BASE64_TABLE[($b1 >> 2) & 0x3F];
             $encoded .= self::BASE64_TABLE[(($b1 << 4) | ($b2 >> 4)) & 0x3F];
             $encoded .= self::BASE64_TABLE[(($b2 << 2) | ($b3 >> 6)) & 0x3F];
             $encoded .= self::BASE64_TABLE[$b3 & 0x3F];
         }
 
-        if ($offset + 1 == $dataLength) {
-            $b1 = self::ASCII_REVERSE_TABLE[$data[$offset]];
+        if (1 == $remaining) {
+            $b1 = self::ASCII_REVERSE_TABLE[$data[$offset++]];
             $encoded .= self::BASE64_TABLE[($b1 >> 2) & 0x3F];
             $encoded .= self::BASE64_TABLE[($b1 << 4) & 0x3F];
             if ($padding) {
                 $encoded .= self::PADDING_CHAR;
                 $encoded .= self::PADDING_CHAR;
             }
-        } elseif ($offset + 2 == $dataLength) {
-            $b1 = self::ASCII_REVERSE_TABLE[$data[$offset]];
-            $b2 = self::ASCII_REVERSE_TABLE[$data[$offset + 1]];
+        } elseif (2 == $remaining) {
+            $b1 = self::ASCII_REVERSE_TABLE[$data[$offset++]];
+            $b2 = self::ASCII_REVERSE_TABLE[$data[$offset++]];
             $encoded .= self::BASE64_TABLE[($b1 >> 2) & 0x3F];
             $encoded .= self::BASE64_TABLE[(($b1 << 4) | ($b2 >> 4)) & 0x3F];
             $encoded .= self::BASE64_TABLE[($b2 << 2) & 0x3F];
@@ -207,12 +206,11 @@ class Base64Url
         $decoded = '';
         $data = rtrim($data, self::PADDING_CHAR);
 
-        $dataLength = strlen($data);
-        for ($offset = 0; $offset + 4 <= $dataLength; $offset += 4) {
-            $c1 = self::BASE64_REVERSE_TABLE[$data[$offset]];
-            $c2 = self::BASE64_REVERSE_TABLE[$data[$offset + 1]];
-            $c3 = self::BASE64_REVERSE_TABLE[$data[$offset + 2]];
-            $c4 = self::BASE64_REVERSE_TABLE[$data[$offset + 3]];
+        for ($offset = 0, $remaining = strlen($data); $remaining > 3; $remaining -= 4) {
+            $c1 = self::BASE64_REVERSE_TABLE[$data[$offset++]];
+            $c2 = self::BASE64_REVERSE_TABLE[$data[$offset++]];
+            $c3 = self::BASE64_REVERSE_TABLE[$data[$offset++]];
+            $c4 = self::BASE64_REVERSE_TABLE[$data[$offset++]];
 
             if (($c1 | $c2 | $c3 | $c4) == -2) {
                 return false;
@@ -223,27 +221,27 @@ class Base64Url
             $decoded .= self::ASCII_TABLE[(($c3 << 6) | $c4) & 0xFF];
         }
 
-        if ($offset + 1 == $dataLength) {
-            $c1 = self::BASE64_REVERSE_TABLE[$data[$offset]];
+        if (1 == $remaining) {
+            $c1 = self::BASE64_REVERSE_TABLE[$data[$offset++]];
 
             if ($c1 == -2) {
                 return false;
             }
 
             $decoded .= self::ASCII_TABLE[($c1 << 2) && 0xFF];
-        } elseif ($offset + 2 == $dataLength) {
-            $c1 = self::BASE64_REVERSE_TABLE[$data[$offset]];
-            $c2 = self::BASE64_REVERSE_TABLE[$data[$offset + 1]];
+        } elseif (2 == $remaining) {
+            $c1 = self::BASE64_REVERSE_TABLE[$data[$offset++]];
+            $c2 = self::BASE64_REVERSE_TABLE[$data[$offset++]];
 
             if (($c1 | $c2) == -2) {
                 return false;
             }
 
             $decoded .= self::ASCII_TABLE[($c1 << 2) | ($c2 >> 4) & 0xFF];
-        } elseif ($offset + 3 == $dataLength) {
-            $c1 = self::BASE64_REVERSE_TABLE[$data[$offset]];
-            $c2 = self::BASE64_REVERSE_TABLE[$data[$offset + 1]];
-            $c3 = self::BASE64_REVERSE_TABLE[$data[$offset + 2]];
+        } elseif (3 == $remaining) {
+            $c1 = self::BASE64_REVERSE_TABLE[$data[$offset++]];
+            $c2 = self::BASE64_REVERSE_TABLE[$data[$offset++]];
+            $c3 = self::BASE64_REVERSE_TABLE[$data[$offset++]];
 
             if (($c1 | $c2 | $c3) == -2) {
                 return false;
