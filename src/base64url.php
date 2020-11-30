@@ -203,56 +203,56 @@ function base64url_encode($data, $padding = true)
  * Return false on error detected
  *
  * @param $data
+ * @param $strict
  * @return false|string
  */
-function base64url_decode($data)
+function base64url_decode($data, $strict = false)
 {
     $decoded = '';
-    $data = rtrim($data, PADDING_CHAR);
 
-    for ($offset = 0, $remaining = strlen($data); $remaining > 3; $remaining -= 4) {
-        $c1 = BASE64_REVERSE_TABLE[$data[$offset++]];
-        $c2 = BASE64_REVERSE_TABLE[$data[$offset++]];
-        $c3 = BASE64_REVERSE_TABLE[$data[$offset++]];
-        $c4 = BASE64_REVERSE_TABLE[$data[$offset++]];
+    for (
+        $i = 0,
+        $j = 0,
+        $padding = 0,
+        $l = strlen($data);
+        $i < $l;
+        ++$i
+    ) {
+        $char = $data[$i];
 
-        if (($c1 | $c2 | $c3 | $c4) == -2) {
+        if (PADDING_CHAR === $char) {
+            ++$padding;
+            continue;
+        }
+
+        $code = BASE64_REVERSE_TABLE[$char];
+
+        if (-2 === $code) {
+            if ($strict) {
+                return false;
+            } else {
+                continue;
+            }
+        } else if ($padding) {
             return false;
         }
 
-        $decoded .= ASCII_TABLE[(($c1 << 2) | ($c2 >> 4)) & 0xFF];
-        $decoded .= ASCII_TABLE[(($c2 << 4) | ($c3 >> 2)) & 0xFF];
-        $decoded .= ASCII_TABLE[(($c3 << 6) | $c4) & 0xFF];
-    }
-
-    if (1 == $remaining) {
-        $c1 = BASE64_REVERSE_TABLE[$data[$offset++]];
-
-        if ($c1 == -2) {
-            return false;
+        switch ($j++ % 4) {
+            case 0:
+                $highBits = $code << 2;
+                break;
+            case 1:
+                $decoded .= ASCII_TABLE[$highBits | $code >> 4];
+                $highBits = $code << 4 & 0xFF;
+                break;
+            case 2:
+                $decoded .= ASCII_TABLE[$highBits | $code >> 2];
+                $highBits = $code << 6 & 0xFF;
+                break;
+            case 3:
+                $decoded .= ASCII_TABLE[$highBits | $code];
+                break;
         }
-
-        $decoded .= ASCII_TABLE[($c1 << 2) && 0xFF];
-    } elseif (2 == $remaining) {
-        $c1 = BASE64_REVERSE_TABLE[$data[$offset++]];
-        $c2 = BASE64_REVERSE_TABLE[$data[$offset++]];
-
-        if (($c1 | $c2) == -2) {
-            return false;
-        }
-
-        $decoded .= ASCII_TABLE[($c1 << 2) | ($c2 >> 4) & 0xFF];
-    } elseif (3 == $remaining) {
-        $c1 = BASE64_REVERSE_TABLE[$data[$offset++]];
-        $c2 = BASE64_REVERSE_TABLE[$data[$offset++]];
-        $c3 = BASE64_REVERSE_TABLE[$data[$offset++]];
-
-        if (($c1 | $c2 | $c3) == -2) {
-            return false;
-        }
-
-        $decoded .= ASCII_TABLE[(($c1 << 2) | ($c2 >> 4)) & 0xFF];
-        $decoded .= ASCII_TABLE[(($c2 << 4) | ($c3 >> 2)) & 0xFF];
     }
 
     return $decoded;

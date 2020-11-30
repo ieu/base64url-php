@@ -6,9 +6,24 @@ use PHPUnit\Framework\TestCase;
 
 class SimpleDecodingTest extends TestCase
 {
-    public function testStringContainingInvalidChar()
+    public function testStringContainingInvalidChar1()
     {
-        $this->assertEquals(false, base64url_decode("\t*|e.A*cMI?p{hB%W|/N1!f"));
+        $this->assertEquals(base64url_decode("_Lr|0;MTd7y@GwOZW>aOFmT*"), "\xFC\xBA\xF4\x31\x37\x7B\xC8\x6C\x0E\x65\x66\x8E\x16\x64");
+    }
+
+    public function testStringContainingInvalidChar2()
+    {
+        $this->assertEquals(base64url_decode("#C$%cF;)yq2;`^\$RRc'wf[qw"), "\x09\xC1\x72\xAB\x64\x51\x73\x07\xEA");
+    }
+
+    public function testStringContainingPaddingCharAtMiddle()
+    {
+        $this->assertEquals(base64url_decode("=eErVv'xe0kC2hV4Z3!Ku&[A"), false);
+    }
+
+    public function testStringContainingInvalidCharStrictly()
+    {
+        $this->assertEquals(false, base64url_decode("\t*|e.A*cMI?p{hB%W|/N1!f", true));
     }
 
     public function testEmptyString()
