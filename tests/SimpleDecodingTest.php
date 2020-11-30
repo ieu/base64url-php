@@ -18,7 +18,7 @@ class SimpleDecodingTest extends TestCase
 
     public function testStringContainingPaddingCharAtMiddle()
     {
-        $this->assertEquals(base64url_decode("=eErVv'xe0kC2hV4Z3!Ku&[A"), false);
+        $this->assertEquals(base64url_decode("=eErVv'xe0kC2hV4Z3!Ku&[A"), "\x78\x4A\xD5\xBF\x17\xB4\x90\x2D\xA1\x57\x86\x77\x2A\xE0");
     }
 
     public function testStringContainingInvalidCharStrictly()

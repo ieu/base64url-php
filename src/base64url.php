@@ -227,18 +227,14 @@ function base64url_decode($data, $strict = false)
 
         $code = BASE64_REVERSE_TABLE[$char];
 
-        if (-2 === $code) {
-            if ($strict) {
-                return false;
-            } else {
-                continue;
-            }
-        } else {
+        if ($strict) {
             if (-1 === $code) {
                 continue;
-            } else if ($padding) {
+            } else if (-2 === $code || $padding) {
                 return false;
             }
+        } else if ($code < 0) {
+            continue;
         }
 
         switch ($j++ % 4) {
