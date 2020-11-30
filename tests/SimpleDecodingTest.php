@@ -26,6 +26,22 @@ class SimpleDecodingTest extends TestCase
         $this->assertEquals(false, base64url_decode("\t*|e.A*cMI?p{hB%W|/N1!f", true));
     }
 
+    public function testStringContainingWhitespace()
+    {
+        $this->assertEquals(
+            'Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure.',
+            base64url_decode(
+<<<TEXT
+\tTWFuIGlzIGRpc3Rpbmd 1aXNoZWQsIG5vdCBvbm x5IGJ5IGhpcyByZWFzb 24sIGJ1dCBieSB0aGlz\r\n
+\tIHNpbmd1bGFyIHBhc3N pb24gZnJvbSBvdGhlci BhbmltYWxzLCB3aGlja CBpcyBhIGx1c3Qgb2Yg\r\n
+\tdGhlIG1pbmQsIHRoYXQ gYnkgYSBwZXJzZXZlcm FuY2Ugb2YgZGVsaWdod CBpbiB0aGUgY29udGlu\r\n
+\tdWVkIGFuZCBpbmRlZmF 0aWdhYmxlIGdlbmVyYX Rpb24gb2Yga25vd2xlZ GdlLCBleGNlZWRzIHRo\r\n
+\tZSBzaG9ydCB2ZWhlbWV uY2Ugb2YgYW55IGNhcm 5hbCBwbGVhc3VyZS4=
+TEXT
+            )
+        );
+    }
+
     public function testEmptyString()
     {
         $this->assertEquals('', base64url_decode(''));
