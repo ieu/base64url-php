@@ -44,7 +44,7 @@ base64url_decode("SGVsbG8sIHdvcmxkIQ==");
 
 // Decode in strict mode
 // Invalid char would cause decoding failure
-base64url_decode("SGVsbG8sIHdvcmxkIQ==");
+base64url_decode("SGVsbG8sIHdvcmxkIQ==", true);
 ```
 
 ## Tests
