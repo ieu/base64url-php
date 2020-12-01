@@ -21,19 +21,29 @@ composer require ieu/base64url:dev-master
 
 ## Usage
 
-```php
-require __DIR__ . '/vendor/autoload.php';
 
+### `base64url_encode`
+
+```php
 use function Ieu\Base64Url\base64url_encode;
-use function Ieu\Base64Url\base64url_decode;
 
 // Encoding
 base64url_encode("Hello, world!");
 
 // Encoding without padding
 base64url_encode("Hello, world!", false);
+```
+
+### `base64url_decode`
+
+```php
+use function Ieu\Base64Url\base64url_decode;
 
 // Decode
+base64url_decode("SGVsbG8sIHdvcmxkIQ==");
+
+// Decode in strict mode
+// Invalid char would cause decoding failure
 base64url_decode("SGVsbG8sIHdvcmxkIQ==");
 ```
 
