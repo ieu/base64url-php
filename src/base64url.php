@@ -200,11 +200,16 @@ use const Ieu\Base64Url\Internal\ASCII_TABLE;
 use const Ieu\Base64Url\Internal\ASCII_REVERSE_TABLE;
 
 /**
- * Encoding data into base64url
+ * Encodes the given data with base64.
+ * 
+ * This encoding is designed to make binary data survive transport
+ * through transport layers that are not 8-bit clean, such as mail bodies.
+ * 
+ * Base64url-encoded data takes about 33% more space than the original data.
  *
- * @param string $data
- * @param boolean $padding
- * @return string
+ * @param string $data The data to encode.
+ * @param boolean $padding Pad with "=" or not.
+ * @return string The encoded data, as a string.
  */
 function base64url_encode($data, $padding = true)
 {
@@ -250,13 +255,18 @@ function base64url_encode($data, $padding = true)
 }
 
 /**
- * Decode base64url back to data
+ * Decodes a base64url encoded data.
  *
  * Return false on error detected
  *
- * @param $data
- * @param $strict
- * @return false|string
+ * @param string $data The encoded data.
+ * @param boolean $strict If the strict parameter is set to TRUE then the
+ *                        base64url_decode() function will return FALSE if the
+ *                        input contains character from outside the base64
+ *                        alphabet. Otherwise invalid characters will be
+ *                        silently discarded.
+ * @return false|string Returns the decoded data or FALSE on failure.
+ *                      The returned data may be binary.
  */
 function base64url_decode($data, $strict = false)
 {
